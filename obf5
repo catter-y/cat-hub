@@ -17,7 +17,7 @@ local Tab = Window:MakeTab({
 Tab:AddButton({
 	Name = "Copy new loadstring",
 	Callback = function()
-      		setclipboard("loadstring(game:HttpGet("https://raw.githubusercontent.com/catter-y/cat-hub/main/main"))()")
+      		setclipboard("loadstring(game:HttpGet('https://raw.githubusercontent.com/catter-y/cat-hub/main/main'))()")
   	end    
 })
 
