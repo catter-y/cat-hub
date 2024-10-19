@@ -1,0 +1,48 @@
+local HttpService = game:GetService("HttpService")
+
+
+local Settings = {
+	Discord = {
+		Invite = "c65ykJpw9Q", 
+		RememberJoins = true
+	}
+}
+
+-- Folder where invite joins are stored
+local CathubFolder = "discord"
+
+if Settings.Discord then
+	
+	if not isfolder(CathubFolder.."/Discord Invites") then
+		makefolder(CathubFolder.."/Discord Invites")
+	end
+
+	
+	local inviteFilePath = CathubFolder.."/Discord Invites/"..Settings.Discord.Invite..".txt"
+
+	if not isfile(inviteFilePath) then
+		
+		if request then
+			request({
+				Url = 'http://127.0.0.1:6463/rpc?v=1',
+				Method = 'POST',
+				Headers = {
+					['Content-Type'] = 'application/json',
+					Origin = 'https://discord.com'
+				},
+				Body = HttpService:JSONEncode({
+					cmd = 'INVITE_BROWSER',
+					nonce = HttpService:GenerateGUID(false),
+					args = {code = Settings.Discord.Invite}
+				})
+			})
+		end
+
+		
+		if Settings.Discord.RememberJoins then
+			writefile(inviteFilePath, "Remembered this invite, will not prompt again.")
+		end
+	else
+		print("E")
+	end
+end
